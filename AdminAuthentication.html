@@ -66,9 +66,29 @@ input[type=text], input[type=password]{
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
+<<<<<<< HEAD:Login.html
 	<link rel="icon" type="image/png" href="images/logo.png" />
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+=======
+    <link rel="icon" type="image/png" href="images/logo.png" />
+     <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyA5WJVnzMdQG6QDzZQshnttG-SuQMx2d-U",
+    authDomain: "librarymanagementsystem-7c1ac.firebaseapp.com",
+    databaseURL: "https://librarymanagementsystem-7c1ac.firebaseio.com",
+    projectId: "librarymanagementsystem-7c1ac",
+    storageBucket: "librarymanagementsystem-7c1ac.appspot.com",
+    messagingSenderId: "549983071560"
+  };
+  firebase.initializeApp(config);
+</script>
+    
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+>>>>>>> b285e10fbac9f9fa4b0b50af063333fb7b0ccd2c:AdminAuthentication.html
 </head>
 <body>
 
@@ -86,6 +106,7 @@ input[type=text], input[type=password]{
 		<img src="images/PLM_Seal.png" alt="Logo" style="width: 20%">
 		<h1><b>Celso Al Karunungan Library</b></h1>
 		<br>
+<<<<<<< HEAD:Login.html
 		<div class="card">
 			<div class = "container2">
 				<h2 style = "color:white">ADMIN LOGIN</h2>
@@ -121,9 +142,37 @@ input[type=text], input[type=password]{
 
 			<br><br>
 		</div>
-
-
+=======
+<div class="card">
+	<div class = "container2">
+	<h2 style = "color:white">ADMIN LOGIN</h2>
+	</div>
+<br>
+  
+    <div class="container3">
+	  <input type="text" placeholder="Enter Username" name="adminname" id="adminname"required>
+	  <br>
+      <input type="password" placeholder="Enter Password" name="adminpassword" id="adminpassword"required>
+    </div>
+    <div class="container3">
+	<button type="submit" name="login-user" style = "color:white" onclick="loginAdmin();">Login</button>
+	</div>
+  </form>
+  <br><br>
+ </div>
 	</center>
+>>>>>>> b285e10fbac9f9fa4b0b50af063333fb7b0ccd2c:AdminAuthentication.html
+
+<script type="text/javascript">
+
+	function loginAdmin(){
+	var logindatabaseRef = firebase.database().ref('MainAdministratorAccount');
+	logindatabaseRef.orderByChild("adminpassword").equalTo("admin").on("child_added", function(snapshot) {
+  	console.log(snapshot.key);
+	});		
+	}
+
+</script>	
 </body>
 </html>
 

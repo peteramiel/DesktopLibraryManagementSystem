@@ -1,79 +1,79 @@
 <!DOCTYPE html>
 <html>
 <style>
-	.wrapper {
-    display: flex;
-    width: 100%;
+.wrapper {
+	display: flex;
+	width: 100%;
 }
 
 #sidebar {
-    width: 250px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100vh;
-    z-index: 999;
-    background: #7386D5;
-    color: #fff;
-    transition: all 0.3s;
+	width: 250px;
+	position: fixed;
+	top: 0;
+	left: 0;
+	height: 100vh;
+	z-index: 999;
+	background: #7386D5;
+	color: #fff;
+	transition: all 0.3s;
 }
 @import "https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700";
 
 
 body {
-    font-family: 'Poppins', sans-serif;
-    background: #fafafa;
+	font-family: 'Poppins', sans-serif;
+	background: #fafafa;
 }
 
 p {
-    font-family: 'Poppins', sans-serif;
-    font-size: 1.1em;
-    font-weight: 300;
-    line-height: 1.7em;
-    color: #999;
+	font-family: 'Poppins', sans-serif;
+	font-size: 1.1em;
+	font-weight: 300;
+	line-height: 1.7em;
+	color: #999;
 }
 
 a, a:hover, a:focus {
-    color: inherit;
-    text-decoration: none;
-    transition: all 0.3s;
+	color: inherit;
+	text-decoration: none;
+	transition: all 0.3s;
 }
 
 #sidebar {
-    /* don't forget to add all the previously mentioned styles here too */
-    background: #7386D5;
-    color: #fff;
-    transition: all 0.3s;
+	/* don't forget to add all the previously mentioned styles here too */
+	background: #7386D5;
+	color: #fff;
+	transition: all 0.3s;
 }
 
 #sidebar .sidebar-header {
-    /*padding: 20px;*/
-    background: #6d7fcc;
+	/*padding: 20px;*/
+	background: #6d7fcc;
 }
 
 #sidebar ul.components {
-    padding: 20px 0;
-    border-bottom: 1px solid #47748b;
+	padding: 20px 0;
+	border-bottom: 1px solid #47748b;
 }
 
 #sidebar ul p {
-    color: #fff;
-    padding: 10px;
+	color: #fff;
+	padding: 10px;
 }
 
 #sidebar ul li a {
-    padding: 10px;
-    font-size: 1.1em;
-    display: block;
+	padding: 10px;
+	font-size: 1.1em;
+	display: block;
 }
 #sidebar ul li a:hover {
-    color: #7386D5;
-    background: #fff;
+	color: #7386D5;
+	background: #fff;
 }
 
 #sidebar ul li.active > a, a[aria-expanded="true"] {
-    color: #fff;
-    background: #6d7fcc;
+	color: #fff;
+	background: #6d7fcc;
 }
 #content{
 	margin-left: 250px;
@@ -81,9 +81,9 @@ a, a:hover, a:focus {
 }
 
 ul ul a {
-    font-size: 0.9em !important;
-    padding-left: 30px !important;
-    background: #6d7fcc;
+	font-size: 0.9em !important;
+	padding-left: 30px !important;
+	background: #6d7fcc;
 }
 </style>
 
@@ -91,143 +91,148 @@ ul ul a {
 	<title>Admin - Add Book</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
-    <link rel="icon" type="image/png" href="images/logo.png" />
-    <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
-<script>
+	<link rel="icon" type="image/png" href="images/logo.png" />
+	<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+	<script>
   // Initialize Firebase
   var config = {
-    apiKey: "AIzaSyA5WJVnzMdQG6QDzZQshnttG-SuQMx2d-U",
-    authDomain: "librarymanagementsystem-7c1ac.firebaseapp.com",
-    databaseURL: "https://librarymanagementsystem-7c1ac.firebaseio.com",
-    projectId: "librarymanagementsystem-7c1ac",
-    storageBucket: "librarymanagementsystem-7c1ac.appspot.com",
-    messagingSenderId: "549983071560"
+  	apiKey: "AIzaSyA5WJVnzMdQG6QDzZQshnttG-SuQMx2d-U",
+  	authDomain: "librarymanagementsystem-7c1ac.firebaseapp.com",
+  	databaseURL: "https://librarymanagementsystem-7c1ac.firebaseio.com",
+  	projectId: "librarymanagementsystem-7c1ac",
+  	storageBucket: "librarymanagementsystem-7c1ac.appspot.com",
+  	messagingSenderId: "549983071560"
   };
   firebase.initializeApp(config);
 </script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
 
-<div class="wrapper">
-    <!-- Sidebar -->
-    <nav id="sidebar">
+	<div class="wrapper">
+		<!-- Sidebar -->
+		<nav id="sidebar">
 
-        <div class="sidebar-header">
-<img src="images/images_library_book.png" alt="Logo" style="width: 100%;" >
-            <h3>PLM Library - Admin</h3>
-        </div>
+			<div class="sidebar-header">
+				<img src="images/images_library_book.png" alt="Logo" style="width: 100%;" >
+				<h3>PLM Library - Admin</h3>
+			</div>
 
-        <ul class="list-unstyled components">
-            
-            <li class="active">
-                <a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
-                <ul class="collapse list-unstyled" id="homeSubmenu">
-                    <li>
-                        <a href="#">Home 1</a>
-                    </li>
-                    <li>
-                        <a href="#">Home 2</a>
-                    </li>
-                    <li>
-                        <a href="#">Home 3</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">About</a>
-            </li>
-            <li>
-                <a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Books</a>
-                <ul class="collapse list-unstyled" id="bookSubmenu">
-                    <li>
-                        <a href="#">Add Book</a>
-                    </li>
-                    <li>
-                        <a href="#">Search Book</a>
-                    </li>
-                    <li>
-                        <a href="#">Delete Book</a>
-                    </li>
-                </ul>
-            </li>
-            <li>
-                <a href="#">Portfolio</a>
-            </li>
-            <li>
-                <a href="#">Contact</a>
-            </li>
-        </ul>
+			<ul class="list-unstyled components">
 
-    </nav>
-    <!-- Page Content -->
-    <div id="content">
+				<li class="active">
+					<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Home</a>
+					<ul class="collapse list-unstyled" id="homeSubmenu">
+						<li>
+							<a href="AdminHome.html">Home 1</a>
+						</li>
+						<li>
+							<a href="#">Home 2</a>
+						</li>
+						<li>
+							<a href="#">Home 3</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">About</a>
+				</li>
+				<li>
+					<a href="#bookSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Books</a>
+					<ul class="collapse list-unstyled" id="bookSubmenu">
+						<li>
+							<a href="#">Add Book</a>
+						</li>
+						<li>
+							<a href="#">Search Book</a>
+						</li>
+						<li>
+							<a href="#">Delete Book</a>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#">Portfolio</a>
+				</li>
+				<li>
+					<a href="#">Contact</a>
+				</li>
+			</ul>
 
-        <form method="post" enctype="multipart/form-data" class="form-horizontal">
-	    
-	<table class="table table-bordered table-responsive">
-	
-	<tr>
-     <td><label class="control-label">Book Title</label></td>
-        <td><input class="form-control" type="text" name="book_title" id = "book_title" placeholder="Enter Book Title" required /></td>
-    </tr>
-    <tr>
-     <td><label class="control-label">Book Author</label></td>
-        <td><input class="form-control" type="text" name="book_author" id = "book_author" placeholder="Enter Book Author" required /></td>
-    </tr>
-	<tr>
-     <td><label class="control-label">Call Number</label></td>
-        <td><input class="form-control" type="text" name="call_number" id = "call_number" placeholder="Enter Call Number" required /></td>
-    </tr>
-    <tr>
-     <td><label class="control-label">Publish Date</label></td>
-        <td><input class="form-control" type="number" name="Publish_date" id = "publish_date" placeholder="Enter Date of Publish" required /></td>
-    </tr>
-	<tr>
-     <td><label class="control-label">Series</label></td>
-        <td><input class="form-control" type="text" name="series" id = "series" placeholder="Enter Book Series" required />
-		</td>
-    </tr>
-    <tr>
-     <td><label class="control-label">Location</label></td>
-        <td><input class="form-control" type="text" name="location" id = "location" placeholder="Enter Location" required />
-		</td>
-    </tr>
-    <tr>
-     <td><label class="control-label">Available</label></td>
-        <td><input class="form-control" type="number" name="available" id = "available" placeholder="Enter Available" required /></td>
-    </tr>
-    <tr>
-    	<td><label class="control-label">Item Picture</label></td>
-        <td><input class="input-group" type="file" name="user_image" id = "unique_id" accept="image/*"required /></td>
-    </tr>
-    
-    <tr>
-    	
-         <td colspan="2"><Button type="button" name="btnsave" class="btn btn-default" 
-         	onclick="writeUserData(document.getElementById('book_title').value,
-        document.getElementById('book_author').value,
-         document.getElementById('call_number').value,
-         document.getElementById('publish_date').value,
-         document.getElementById('series').value,
-         document.getElementById('location').value,
-         document.getElementById('available').value,
-         document.getElementById('unique_id').value);">
-        <span class="glyphicon glyphicon-save"></span> &nbsp; Save
-        </Button>
-        </td>
-    </tr>
-    
-    </table>
-    
-</form>
+		</nav>
+		<!-- Page Content -->
+		<div id="content">
 
- <script>
- 
+			<form method="post" enctype="multipart/form-data" class="form-horizontal">
 
+				<table class="table table-bordered table-responsive">
+
+					<tr>
+						<td><label class="control-label">Book Title</label></td>
+						<td><input class="form-control" type="text" name="book_title" id = "book_title" placeholder="Enter Book Title" required /></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Book Author</label></td>
+						<td><input class="form-control" type="text" name="book_author" id = "book_author" placeholder="Enter Book Author" required /></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Call Number</label></td>
+						<td><input class="form-control" type="text" name="call_number" id = "call_number" placeholder="Enter Call Number" required /></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Publish Date</label></td>
+						<td><input class="form-control" type="number" name="Publish_date" id = "publish_date" placeholder="Enter Date of Publish" required /></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Series</label></td>
+						<td><input class="form-control" type="text" name="series" id = "series" placeholder="Enter Book Series" required />
+						</td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Location</label></td>
+						<td><input class="form-control" type="text" name="location" id = "location" placeholder="Enter Location" required />
+						</td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Available</label></td>
+						<td><input class="form-control" type="number" name="available" id = "available" placeholder="Enter Available" required /></td>
+					</tr>
+					<tr>
+						<td><label class="control-label">Item Picture</label></td>
+						<td><input class="input-group-hello" type="file" name="user_image" id = "unique_id" accept="image/*"required /></td>
+					</tr>
+
+					<tr>
+
+						<td colspan="2"><Button type="button" name="btnsave" class="btn btn-default" 
+							onclick="writeUserData(document.getElementById('book_title').value,
+								document.getElementById('book_author').value,
+								document.getElementById('call_number').value,
+								document.getElementById('publish_date').value,
+								document.getElementById('series').value,
+								document.getElementById('location').value,
+								document.getElementById('available').value
+								);">
+								<span class="glyphicon glyphicon-save"></span> &nbsp; Save
+							</Button>
+						</td>
+					</tr>
+
+				</table>
+
+			</form>
+
+			<script>
+ // Create a root reference
+
+
+// var file = ... // use the Blob or File API
+// ref.put(file).then(function(snapshot) {
+//   console.log('Uploaded a blob or file!');
+// });
   // var databaseRef = firebase.database().ref('Books/');
   // var rowIndex = 1;
   
@@ -235,7 +240,7 @@ ul ul a {
   //   snapshot.forEach(function(childSnapshot) {
   //  var childKey = childSnapshot.key;
   //  var childData = childSnapshot.val();
-   
+
   //  var row = tblUsers.insertRow(rowIndex);
   //  var cellKey = row.insertCell(0);
   //  var cellIDnumber = row.insertCell(1);
@@ -249,34 +254,42 @@ ul ul a {
   //  cellType.appendChild(document.createTextNode(childData.userType));
   //  cellProgram.appendChild(document.createTextNode(childData.userProgram));
   //  cellContactnumber.appendChild(document.createTextNode(childData.contactNumber));
-   
+
   //  rowIndex = rowIndex + 1;
   //   });
   // });
-  function writeUserData(bookTitle, bookAuthor, callNumber, publishDate,location, series,available,uniqueId) {
+  function writeUserData(bookTitle, bookAuthor, callNumber, publishDate,location, series,available) {
+  	var bookImageRef = firebase.storage().ref('Books');
+  	// var preview = document.querySelector('.preview');
+
+  	const file = document.querySelector('.input-group-hello').files[0];
+  	const name = (+new Date()) + '_' + file.name;
+  	const metadata = { contentType: file.type };
+  	const task = bookImageRef.child(name).put(file, metadata);
+
   	var uid = firebase.database().ref().child('Books').push().key;
-  firebase.database().ref('Books').child(uid).set({
-   	available: available,
-   	bookAuthor: bookAuthor,
-   	bookTitle: bookTitle,
-   	callNumber: callNumber,
-   	location: location,
-   	publishDate: publishDate,
-   	series: series,
-   	uniqueId: uniqueId
-  }, function(error) {
-    if (error) {
-      alert('Creating Failed');
-    } else {
+  	firebase.database().ref('Books').child(uid).set({
+  		available: available,
+  		bookAuthor: bookAuthor,
+  		bookTitle: bookTitle,
+  		callNumber: callNumber,
+  		location: location,
+  		publishDate: publishDate,
+  		series: series,
+  		uniqueId: name
+  	}, function(error) {
+  		if (error) {
+  			alert('Creating Failed');
+  		} else {
       // Data saved successfully!
       alert('The book is created successfully!');
-    }
-  }); 
-  
+  }
+}); 
+
     // window.location.reload();
 
 
- }
+}
 
   // function save_user(){
   //  var uid = firebase.database().ref().child('Books').push().key;
@@ -290,7 +303,7 @@ ul ul a {
   //  // var uniqueId = document.getElementById('unique_id').value;
   //  var unique_id = "asdf.jpg"
 
-     
+
   //  var bookData = {	
   //  	available: available,
   //  	bookAuthor: book_author,
@@ -301,11 +314,11 @@ ul ul a {
   //  	series: series,
   //  	uniqueId: unique_id
   //  }
-   
+
   //  var updates = {};
   //  updates['/Books/' + uid] = bookData;
   //  firebase.database().ref().update(updates);
-   
+
   //  reload_page();
   // }
   
@@ -313,16 +326,16 @@ ul ul a {
   //  window.location.reload();
   // }
   
- </script>
-    </div>
+</script>
 </div>
- <!-- jQuery CDN - Slim version (=without AJAX) -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <!-- Popper.JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-    <!-- Bootstrap JS -->
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
-    <!-- jQuery Custom Scroller CDN -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
+</div>
+<!-- jQuery CDN - Slim version (=without AJAX) -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<!-- Popper.JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<!-- Bootstrap JS -->
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<!-- jQuery Custom Scroller CDN -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/malihu-custom-scrollbar-plugin/3.1.5/jquery.mCustomScrollbar.concat.min.js"></script>
 </body>
 </html>

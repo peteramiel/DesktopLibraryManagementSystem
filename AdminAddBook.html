@@ -172,19 +172,19 @@ ul ul a {
 	
 	<tr>
      <td><label class="control-label">Book Title</label></td>
-        <td><input class="form-control" type="text" name="book_title" id = "bookTitle" placeholder="Enter Book Title" required /></td>
+        <td><input class="form-control" type="text" name="book_title" id = "book_title" placeholder="Enter Book Title" required /></td>
     </tr>
     <tr>
      <td><label class="control-label">Book Author</label></td>
-        <td><input class="form-control" type="text" name="book_author" id = "bookAuthor" placeholder="Enter Book Author" required /></td>
+        <td><input class="form-control" type="text" name="book_author" id = "book_author" placeholder="Enter Book Author" required /></td>
     </tr>
 	<tr>
      <td><label class="control-label">Call Number</label></td>
-        <td><input class="form-control" type="text" name="call_number" id = "callNumber" placeholder="Enter Call Number" required /></td>
+        <td><input class="form-control" type="text" name="call_number" id = "call_number" placeholder="Enter Call Number" required /></td>
     </tr>
     <tr>
      <td><label class="control-label">Publish Date</label></td>
-        <td><input class="form-control" type="number" name="Publish_date" id = "publishDate" placeholder="Enter Date of Publish" required /></td>
+        <td><input class="form-control" type="number" name="Publish_date" id = "publish_date" placeholder="Enter Date of Publish" required /></td>
     </tr>
 	<tr>
      <td><label class="control-label">Series</label></td>
@@ -202,14 +202,22 @@ ul ul a {
     </tr>
     <tr>
     	<td><label class="control-label">Item Picture</label></td>
-        <td><input class="input-group" type="file" name="user_image" id = "uniqueId" accept="image/*"required /></td>
+        <td><input class="input-group" type="file" name="user_image" id = "unique_id" accept="image/*"required /></td>
     </tr>
     
     <tr>
     	
-         <td colspan="2"><button type="submit" name="btnsave" class="btn btn-default" onclick="save_user();">
-        <span class="glyphicon glyphicon-save"></span> &nbsp; save
-        </button>
+         <td colspan="2"><Button type="button" name="btnsave" class="btn btn-default" 
+         	onclick="writeUserData(document.getElementById('book_title').value,
+        document.getElementById('book_author').value,
+         document.getElementById('call_number').value,
+         document.getElementById('publish_date').value,
+         document.getElementById('series').value,
+         document.getElementById('location').value,
+         document.getElementById('available').value,
+         document.getElementById('unique_id').value);">
+        <span class="glyphicon glyphicon-save"></span> &nbsp; Save
+        </Button>
         </td>
     </tr>
     
@@ -220,8 +228,8 @@ ul ul a {
  <script>
  
 
-  var databaseRef = firebase.database().ref('Books/');
-  var rowIndex = 1;
+  // var databaseRef = firebase.database().ref('Books/');
+  // var rowIndex = 1;
   
   // databaseRef.once('value', function(snapshot) {
   //   snapshot.forEach(function(childSnapshot) {
@@ -245,41 +253,65 @@ ul ul a {
   //  rowIndex = rowIndex + 1;
   //   });
   // });
-   
-  function save_user(){
-   var uid = firebase.database().ref().child('Books').push().key;
-   var bookTitle = document.getElementById('bookTitle').value;
-   var bookAuthor = document.getElementById('bookAuthor').value;
-   var callNumber = document.getElementById('callNumber').value;
-   var publishDate = document.getElementById('publishDate').value;
-   var location = document.getElementById('location').value;
-   var series = document.getElementById('series').value;
-   var available = document.getElementById('available').value;
-   var uniqueId = document.getElementById('uniqueId').value;
-
-     
-   var bookData = {
+  function writeUserData(bookTitle, bookAuthor, callNumber, publishDate,location, series,available,uniqueId) {
+  	var uid = firebase.database().ref().child('Books').push().key;
+  firebase.database().ref('Books').child(uid).set({
+   	available: available,
    	bookAuthor: bookAuthor,
    	bookTitle: bookTitle,
    	callNumber: callNumber,
-   	publishDate: publishDate,
    	location: location,
+   	publishDate: publishDate,
    	series: series,
-   	available: available,
    	uniqueId: uniqueId
-   }
-   
-   var updates = {};
-   updates['/Books/' + uid] = bookData;
-   firebase.database().ref().update(updates);
-   
-   alert('The book is created successfully!');
-   reload_page();
-  }
+  }, function(error) {
+    if (error) {
+      alert('Creating Failed');
+    } else {
+      // Data saved successfully!
+      alert('The book is created successfully!');
+    }
+  }); 
   
-   function reload_page(){
-   window.location.reload();
-  }
+    // window.location.reload();
+
+
+ }
+
+  // function save_user(){
+  //  var uid = firebase.database().ref().child('Books').push().key;
+  //  var book_title = document.getElementById('book_title').value;
+  //  var book_author = document.getElementById('book_author').value;
+  //  var call_number = document.getElementById('call_number').value;
+  //  var publish_date = document.getElementById('publish_date').value;
+  //  var location = document.getElementById('location').value;
+  //  var series = document.getElementById('series').value;
+  //  var available = document.getElementById('available').value;
+  //  // var uniqueId = document.getElementById('unique_id').value;
+  //  var unique_id = "asdf.jpg"
+
+     
+  //  var bookData = {	
+  //  	available: available,
+  //  	bookAuthor: book_author,
+  //  	bookTitle: book_title,
+  //  	callNumber: call_number,
+  //  	location: location,
+  //  	publishDate: publish_date,
+  //  	series: series,
+  //  	uniqueId: unique_id
+  //  }
+   
+  //  var updates = {};
+  //  updates['/Books/' + uid] = bookData;
+  //  firebase.database().ref().update(updates);
+   
+  //  reload_page();
+  // }
+  
+  //  function reload_page(){
+  //  window.location.reload();
+  // }
   
  </script>
     </div>

@@ -1,0 +1,56 @@
+
+body{
+	background-repeat: no-repeat;
+	background-size: 1500px 950px;
+}
+
+.card {
+	box-shadow: 0 4px 8px 2px rgba(0,0,0,0.2);
+	transition: 0.3s;
+	width: 650px;
+	text-align: center;
+	margin: 10px 52px 50px 58px;
+	background-color:white;
+}
+.card:hover {
+	box-shadow: 0 8px 16px 4px rgba(0,0,0,0.2);
+}
+
+h1{
+	font-family:Century Gothic;
+	font-size:60px;
+}
+
+.container2{
+	background-color: #92c6d7;
+	padding: 10px 8px 16px 4px;
+}
+
+.container3{
+	padding: 16px;
+}
+
+button{
+	background-color:#92c6d7;
+	color: white;
+	padding: 14px 10px;
+	margin: 8px 0;
+	border: none;
+	cursor: pointer;
+	width: 60%;
+	text-align: center;
+}
+
+form{
+	text-align: center;
+}
+
+input[type=text], input[type=password]{
+	width:60%;
+	padding: 12px 5px;
+	margin: 5px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	box-sizing: border-box;
+	text-align: center;
+}

@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "librarymanagementsystem-7c1ac",
+  "private_key_id": "c3a7bf53a58f55849bb5b2355fbdcc2b58fce1cc",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDGyCZNJDV5n0w5\nuPjE1KR3DOYCAGcYBYe2YTMqIZlO5UeTnRXRB6avlsC90Ty/7ZOZbLut5cGv00KC\n7jhXYk5pa8zr0QDpKV6HFaVcb1Z3PFcOuDji7oWnhc94N9k++SnzPpdKWOA2Gptg\nAocFgdfU9b5rpC6UrWpANcNwihr6VpU7cGDfQJpSOQQ11pjRsc0xU0/VSUcggF/7\nDAmxsgf45wjZK+YbK34d7pMELSdZTM/sstFHd6OnKC/TK/Z+tjla9wshfOARvETa\nnrRW5JlJ0cwGy/U4TbmFn76cXfeXFMAMExqBThA34y4mw4Njx/WXt8WV/W1H0yRm\niqexeh8TAgMBAAECggEAAKgOw6TZf98DYPEfohGpcAZQz/RBChciNEHytY3PA/gY\nUw8We8rW69OgMutiY3WlWGTNmk5KLF/dsOkPBgfqohrLYB28uNsgKReZC43B0J/W\nJTHkKU4znlV/Jl8IaSCxsPoOHiAj+wZHVZK1RW6tZ6JzqsjA1wJpGd5GFugF6MyJ\nPrfiXf5sloqVP+IsQoDZklt/tzF2eFrbemIwWlKSKd/nr6N8RsOD/d2TwG2wPPo5\nQfmAmNAblAeB/aqbpovgJpNgzlID/THBdo5DuXpUR+7jPvzxrdTCdspBZpxhUxul\n/BuDtwFdKG3znFIQXEFvFgNN4pVI4/ZXrzVxg8H8AQKBgQD51qOkxMRJ9QzDZukR\nS2xQDCH7tkQl/sTRIUIstSB3XvrPtLTEOSWkOIjkDcf8S/InuDGkrP7sdqO++SRQ\nidfDBEn4iaRnq5/Pr95mRuNfgCWwoAPOc+ktw8X/WR23H9Kv3Trgk3ZbRJY8RgXj\nVCKQbcizlj6oW94p8wSfOy7/QQKBgQDLrynRR9TsUTcGZ2VQTLtLQz4RZ1R+YNq/\n8hywg3EYL1M8czyPOgFeeWUvzwkJ1o9W5Xny1BYOaOyuMQaa//x0eBgku2NJ5H+A\ng5UN/0DVyMG1YIGVzlmj4araXiSmIeD85zrLQeOlwxQXOoULCVb3bF50aMgMszBD\nQOoLnJMdUwKBgQDBKqol6BjYEcaHghbrz0P0dB0GUDtKoTutciiHBpgOk3oag95L\n5N9spGV65gjc0h9thGWlrDgBvg0Gx/zC5IDVAIjsyAc8PJ74ZkLvExoTqbH6aQ3o\nXwhH4RlCP7XQ86LjZIp0Pq+BC3uZKI6+4DtFLgzChYT2iOkxx/qn3ouMwQKBgEkT\nokQ0ql7S0JQamo3Rycy55lXmJbll1HXTTpnBvty3dfyVN6AHZqBXm4col4yRD0JU\n+Ii3sOYgnPHuIvmPaCr9P2RGWtwS/+/CxcKM1t0ctur1Iej2bNDQUTUhW7LDKu5x\no3VzQVKih93BoCQSiMIifkzznvp3e5RVgOMDnQCDAoGBAK5mKLZzdyIKfWfxsYJT\nfYzf+Lcl4YLu+NN50kAFYHsDdEwp1Ue0CqkvCQWv54iaP93dG2XAEZYkDBh9DJ8N\nNQdgYdlGMpKJ+YY0JMeFQHSBc1/jFbltagybsmmt1p+xsEyreDDVmCtPd6+xuDr/\n8xYu4TqHWBOdTjasLWokcC0k\n-----END PRIVATE KEY-----\n",
+  "client_email": "rblms-323@librarymanagementsystem-7c1ac.iam.gserviceaccount.com",
+  "client_id": "112504020845593493740",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/rblms-323%40librarymanagementsystem-7c1ac.iam.gserviceaccount.com"
+}

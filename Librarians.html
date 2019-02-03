@@ -1,0 +1,369 @@
+<html>
+
+<style>
+.title{
+    font-family: sans-serif;
+    color: #dc2d5e;
+}
+
+.container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: inline;
+    margin-top: 199px;
+}
+
+
+.image {
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    margin-bottom: 20px;
+}
+
+
+.text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: sans-serif;
+}
+
+
+.overlayFade{
+    height: 250%;
+    width:100%;
+    top:0;
+    left:0;
+}
+.overlay {
+    position: absolute;
+    opacity: 0;
+    transition:all .3s ease;
+    background-color: #008cba;
+}
+.container:hover .overlay,.container:hover .overlayFade {
+    opacity: 1;
+    margin-top: 35px;
+}
+
+.overlayLeft{
+    height: 250%;
+    width:100%;
+    top:0;
+    left:0;
+    background-color: #00b1ba;
+}
+.overlayRight{
+    height: 250%;
+    width: 100%;
+    top:0;
+    right:0;
+    background-color: #12888e;
+}
+.container:hover .overlayLeft ,.container:hover .overlayRight {
+    width: 100%;
+    margin-top: 35px;
+}
+.overlayTop{
+    width: 100%;
+    height: 250%;
+    top:0;
+    left:0;
+    background-color: #d63c58;
+
+}
+.overlayBottom{
+    width: 100%;
+    height: 250%;
+    top: 25%;
+    bottom:0;
+    left:0;
+    background-color: #941e33;
+}
+.container:hover .overlayTop {
+    height: 250%;
+    margin-top: 35px;
+    height: 250%;
+
+
+    }
+.container:hover .overlayBottom {
+    margin-top: 35px;
+    height: 250%;
+}
+
+
+
+.overlayCross{
+    width: 100%;
+    height: 250%;
+    top:30%;
+    left:0;
+    background-color: #e47a52;
+}
+.container:hover .overlayCross {
+    height: 250%;
+    width: 100%;
+    margin-top: 35px;
+}
+
+
+
+</style>
+<head>
+	<title>PLM Library</title>
+  	<meta charset="utf-8">
+  	<meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+  	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  	 <link rel="stylesheet" href="./css/home.css">
+
+  	<link rel="icon" type="image/png" href="images/icons/PLM_Seal.png" />
+</head>
+<body >
+	<nav class="navbar" style="background-color: #ECEDEF">
+    	<div class="navbar-header">
+      	<a class="navbar-brand" href="#">PLM Library System</a>
+      	</div>
+
+		<div class="navbar-form">
+		<form class="form-inline">
+    	<input class="form-control mr-sm-2" type="search" placeholder=" Search" style="font-family:Arial, FontAwesome font-style: normal; font-weight: normal;text-decoration: inherit; color:#5D5763;" aria-label="Search" >
+    	<button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+  		</form>
+  		</div>
+
+		<ul class="nav justify-content-end">
+		<li class="nav-item">
+    	<a class="nav-link" href="UserLogin.php" onclick="Home.php"><i class='fas fa-user'></i> User</a>
+  		</li>
+		<li class="nav-item">
+    	<a class="nav-link" href="AdminLogin.php" onclick="AdminLogin.php"><i class='fas fa-user-cog'></i> Admin</a>
+  		</li>
+ 		</ul>
+	</nav>
+
+	<nav class="navbar" id="home_nav" style="border-bottom:#79BF2B 5px solid; padding-bottom: 20px">
+	
+      	<img src="images/icons/images_library_book.png" alt="Logo" height="80px" >
+      	
+		<ul class="nav justify-content-end" >
+
+		<li class="nav-item" href="#"><center>
+        <a class="nav-link" href="Index.php" ><i class='far fa-newspaper' style='font-size:48px;'></i><br>Home</a>
+        </center>
+        </li>
+
+        <li class="nav-item" href="#"><center>
+        <a class="nav-link" href="#"><i class='fas fa-book' style='font-size:48px;'></i><br>Catalog</a>
+        </center>
+        </li>
+
+        <li class="nav-item" href="#"><center>
+        <a class="nav-link" href="#"><i class='far fa-map' style='font-size:48px;'></i><br>Map</a>
+        </center>
+        </li>
+
+
+        <li class="nav-item" href="#"><center>
+        <a class="nav-link" href="Librarians.html" ><i class='far fa-user-circle' style='font-size:48px;'></i><br>Librarians</a>
+        </center>
+        </li>
+
+        <li class="nav-item" href="#"><center>
+        <a class="nav-link" href="#" "><i class='fas fa-id-badge' style='font-size:48px;'></i><br>Mobile App</a>
+        </center>
+        </li>
+
+        <li class="nav-item" href="#"><center>
+        <a class="nav-link" href="About.html" ><i class='far fa-comment' style='font-size:48px;'></i><br>About</a>
+        </center>
+        </li>
+
+
+ 		</ul>
+	</nav>
+
+    <h1 style="text-align: center;" "font-family: Poppins">LIBRARY PERSONNEL</h1>
+
+	<div align="center" style="margin-top: 40px">
+    <div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay  overlayLeft">
+                <div class="text" style="font-size: 11px">Grace M. Mauricio College Librarian III (Chief) [OIC]</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayRight">
+                <div class="text"  style="font-size: 10px">Ma. Teresa R. Aguila Administrative Assistant I </div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayFade">
+               <div class="text" style="font-size: 10px">Mitchell M. Arreola Administrative Aide VI </div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayTop" >
+                <div class="text" style="font-size: 10px">Erlinda G. Barredo College Librarian II </div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayBottom">
+                <div class="text" style="font-size: 10px">Crisanta M. Boncan </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div>
+        
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayCross">
+                <div class="text" style="font-size: 10px">Rachel Joan De Guzman     Administrative Aide II </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayTop" >
+                 <div class="text" style="font-size: 10px">Liza B. Fajardo  College Librarian III</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayBottom">
+               <div class="text" style="font-size: 10px">Lorezl R. Garcia   College Librarian I</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayCross">
+               <div class="text" style="font-size: 10px">Rogelio A. Honorio     Computer Operator III</div>
+            </div>
+        </div>
+
+    <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay  overlayLeft">
+              <div class="text" style="font-size: 10px">Roberto I. Junio    Bookbinder III</div>
+            </div>
+        </div>
+    </div>
+
+ <div>
+        
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayRight">
+               <div class="text" style="font-size: 10px">Ofelia C. Liwanag  Utility Worker II</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayFade">
+                <div class="text" style="font-size: 10px">Metzie A. Manuel  Clerk III</div>
+            </div>
+        </div>
+
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay  overlayLeft">
+               <div class="text" style="font-size: 10px">Everest G. Mont College Librarian II</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayRight">
+              <div class="text" style="font-size: 10px">Marilyn O. Montalla     Administrative Aide II</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayFade">
+               <div class="text" style="font-size: 10px">Edmund S. Ordinario    Computer Operator I</div>
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay  overlayLeft">
+                <div class="text" style="font-size: 10px">Arlene I. Relator     College Librarian II</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayRight">
+                <div class="text" style="font-size: 10px">Gerald O. Remigio Administrative Assistant III</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayFade">
+                <div class="text" style="font-size: 10px">Ma. Gracia Paz Reyes  Utility Worker II</div>
+            </div>
+        </div>
+
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay  overlayLeft">
+          <div class="text" style="font-size: 10px">Ma. Rowena O. Reyes</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayRight">
+             <div class="text" style="font-size: 10px">Ma. Lulu L. Salvador</div>
+            </div>
+        </div>
+    </div>
+
+     <div>
+        
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayFade">
+                <div class="text" style="font-size: 10px">Anelli Gail D. Sampana    Senior Administrative Assistant II</div>
+            </div>
+        </div>
+        <div class="container">
+            <img src="images/librarians/download.png" alt="Avatar" class="image">
+            <div class="overlay overlayFade">
+                <div class="text" style="font-size: 10px">Glori Stephanie S. Santiago</div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+
+</div>
+        
+
+  
+
+
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

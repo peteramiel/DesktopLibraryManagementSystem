@@ -1,11 +1,7 @@
 <?php
-//session_start();
-//if ($_SESSION['fullName']==NULL){
-//echo "<script> window.location.href='AdminLogin.php';</script>";
-//}
 
 session_start();
-if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
+if(isset($_SESSION["username"]) && $_SESSION["role"]=="admin"){
   }else{
     header('location: AdminLogin.php');
   }
@@ -14,6 +10,60 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 
 <!DOCTYPE html>
 <html>
+<style>
+	div.form
+{
+    display: block;
+    text-align: center;
+}
+form
+{
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+}
+
+
+hr.style15 { 
+  border: 0; 
+  height: 2px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
+table {
+	margin-top: 20px; 
+}
+
+td .form-control{
+	width: 230px;
+	height: 30px;
+}
+
+td .control-label{
+	width: 200px;
+	height: 30px;
+}
+
+table tr:nth-child(even){
+  background-color: #71c2ce
+}
+
+button{
+	align-content: center;
+	background-color: #258230;
+	color: #fff;
+	padding: 5px;
+	text-align: center;
+}
+
+
+
+</style>
+
 <head>
 	<style>
 	#view_profile{
@@ -30,14 +80,14 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 		box-shadow: 0 8px 16px 4px rgba(0,0,0,0.2);
 	}
 	</style>
-	<title>Admin - Add Book</title>
+	<title>Admin - Add Student</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   	<link rel="stylesheet" href="./css/admin.css">
 
-	<link rel="icon" type="image/png" href="images/icons/PLM_Seal.png" />
+	<link rel="icon" type="image/png" href="images/icons/logo_circle.png" />
 	<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
 	<script src="http://bootboxjs.com/bootbox.js"></script>
 	<script type="text/javascript" src="scripts/dbconf.js" ></script>
@@ -55,7 +105,7 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 		 document.getElementById("newsLi").classList.remove('active');
 		 document.getElementById("studentVerificationLi").classList.remove('active');
 		 document.getElementById("librariansLi").classList.remove('active');
-		 document.getElementById("addStudentLi").classList.add('active');
+		 document.getElementById("addStudentsLi").classList.add('active');
 		 document.getElementById("editSearchPageLi").classList.remove('active');
 	</script>
 
@@ -67,13 +117,22 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 
 	//This code runs if the form has been submitted
 	if (isset($_POST['btnsave'])) { 
+		$userName = $_POST['Name'];
+		$userNumber = $_POST['StudentNumber'];
+		$course = $_POST['Course'];
+		$college = $_POST['College'];
+		$yearLevel = $_POST['YearLevel'];
+		$email = $_POST['Email'];
+		$contactNumber = $_POST['ContactNumber'];
+		
+
 
 	$imgFile = $_FILES['user_image']['name'];
 	$tmp_dir = $_FILES['user_image']['tmp_name'];
 	$imgSize = $_FILES['user_image']['size'];
 	  
 	  // 	UPLOAD IMAGE TO LOCAL HOST
-			$upload_dir = 'images/books/'; // upload directory
+			$upload_dir = 'images/users/'; // upload directory
 	
 			$imgExt = strtolower(pathinfo($imgFile,PATHINFO_EXTENSION)); // get image extension
 		
@@ -81,7 +140,7 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 			$valid_extensions = array('jpeg', 'jpg', 'png', 'gif'); // valid extensions
 		
 			// rename uploading image
-			$userpic = rand(1000,1000000).".".$imgExt;
+			// $userpic = rand(1000,1000000).".".$imgExt;
 			$userpic = md5(uniqid(rand(), true)).".".$imgExt;
 
 			// allow valid image file formats
@@ -100,23 +159,41 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 		// END OF UPLOAD IMAGE TO LOCAL HOST
 
 	//UPLOAD TO DATABASE
-	$insert = "INSERT INTO books (available, bookAuthor, bookTitle, callNumber, location, publishDate, series,uniqueId)
-	VALUES ('".$_REQUEST['available']."', '".$_REQUEST['book_author']."', '".$_REQUEST['book_title']."', '".$_REQUEST['call_number']."','".$_REQUEST['location']."','".$_REQUEST['publish_date']."','".$_REQUEST['series']."','".$userpic."')";
+	$insert = "INSERT INTO student (Name, StudentNumber, Userpic, Course, College, YearLevel, Email,ContactNumber, UserType)
+	VALUES ('$userName', '$userNumber', '$userpic', '$course','$college','$yearLevel','$email','$contactNumber','Student')";
+	date_default_timezone_set("Asia/Hong_Kong");
+	$dateTime = date('l g:i A F j, Y');
+	$add_activity_sql = "INSERT INTO recent_activity (userName,item_code,role,action,dateTime,item_detail) VALUES ('".$_SESSION["username"]."','$userNumber','admin','Add Student','$dateTime','$userName in $course')";
+	
 
-	$add_book = $dbconn->query($insert);
+		if ($dbconn->connect_errno) {
+		    echo"<div id='myAlert' class='alert alert-danger'>
+			        <a href='#' class='close' data-dismiss='alert'>&times;</a>
+			        <strong>Can't Connect to the Database</strong><br>
+			    </div>";
+		}
 
+		if (!$dbconn->query($insert) && !$dbconn->query($add_activity_sql)) {
+		    echo"<div id='myAlert' class='alert alert-danger'>
+			        <a href='#' class='close' data-dismiss='alert'>&times;</a>
+			        <strong>Oops! Something went wrong, please try again.</strong><br>
+			    </div>";
+		}
 
-	echo"<div id='myAlert' class='alert alert-success'>
-	        <a href='#' class='close' data-dismiss='alert'>&times;</a>
-	        <strong>Student Registration Success!</strong><br>
-	    </div>";
-
+		else{
+			
+			echo"<div id='myAlert' class='alert alert-success'>
+			        <a href='#' class='close' data-dismiss='alert'>&times;</a>
+			        <strong>Student Registration Success!</strong><br>
+			    </div>";
+		}
 	} 
 	else 
 	{} 
 	?>
 
-			<center><h2>Student Registration</h2></center>
+			<center><h1 style="font-family: 'Century Gothic';">STUDENT REGISTRATION</h1></center>
+			<hr class="style15">
 			<div class="card" id ="view_profile" style="float: right; text-align: center;">
 			
 			  <img src="./images/users/default.png" id="view_image" alt="John" style="width: auto;" height="250dp" >
@@ -125,8 +202,10 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 			  <p id="view_course">Course</p>
 			  <p id="view_studentNumber">Student Number</p>
 			  <p id="view_email">Email</p>
-			  <p><button>Contact</button></p>
+			 
 			</div>
+
+			<div class= form>
 			<form method="post" enctype="multipart/form-data" class="form-horizontal" action="<?php echo $_SERVER['PHP_SELF']; ?>" >
 
 				<table class="table table-bordered" style="width:50%">
@@ -137,7 +216,7 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 					</tr>
 					<tr>
 						<td><label class="control-label">Student Number</label></td>
-						<td><input class="form-control" type="text" name="StudentNumber" id = "StudentNumber" onkeyup="changeStudentNumber()" placeholder="Enter Student Number" required /></td>
+						<td><input class="form-control" type="text" name="StudentNumber" id = "StudentNumber" onkeyup="changeStudentNumber()" placeholder="Enter Student Number (e.g., 2014100000)" required /></td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Course</label></td>
@@ -168,7 +247,7 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 
 					<tr>
 
-						<td colspan="2"><Button type="submit" name="btnsave" class="btn btn-default">
+						<td style = "text-align:center;" colspan="2"><Button type="submit" name="btnsave" class="btn btn-default">
 								<span class="glyphicon glyphicon-save"></span> &nbsp; Save
 							</Button>
 						</td>
@@ -177,6 +256,7 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 				</table>
 
 			</form>
+			</div>
 			
 			<!-- END OF CONTENT -->
 		</div>
@@ -206,7 +286,7 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 		    reader.readAsDataURL(input.files[0]);
 		}
 		else{
-		     $('#view_image').attr('src', '/assets/no_preview.png');
+		     $('#view_image').attr('src', '/images/librarians/student.png');
 		  }
 		}
 

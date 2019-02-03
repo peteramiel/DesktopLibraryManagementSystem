@@ -1,10 +1,17 @@
 <?php
+
+
 include 'CRUD_BOOKS1.php';
 $object = new Crud();
 if(isset($_POST["action"])){
 
  if($_POST["action"] == "Load"){
-  $record_per_page = 20;
+  if($_SESSION["role"]=="librarian"){
+    $record_per_page = 18;
+  }else{
+    $record_per_page = 20;
+  }
+ 
   $page = '';
 
   if(isset($_POST["page"])){

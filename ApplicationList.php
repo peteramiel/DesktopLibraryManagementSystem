@@ -5,7 +5,7 @@
 //}
 
 session_start();
-if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
+if(isset($_SESSION["username"]) && $_SESSION["role"]=="admin"){
   }else{
     header('location: AdminLogin.php');
   }
@@ -38,6 +38,16 @@ table td{
   padding: 8;
 }
 
+hr.style15 { 
+  border: 0; 
+  height: 2px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
+
 </style>
 <head>
 	<title>Admin - Application List</title>
@@ -47,10 +57,10 @@ table td{
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   	<link rel="stylesheet" href="./css/admin.css">
 
-	<link rel="icon" type="image/png" href="images/icons/PLM_Seal.png" />
-	<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
+	<link rel="icon" type="image/png" href="images/icons/logo_circle.png" />
+	<!-- <script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script> -->
 	<script src="http://bootboxjs.com/bootbox.js"></script>
-	<script type="text/javascript" src="scripts/dbconf.js" ></script>
+	<!-- <script type="text/javascript" src="scripts/dbconf.js" ></script> -->
 	
 </head>
 
@@ -124,22 +134,14 @@ table td{
 // </script>";
 
 	?>
-	<?php
-	if (isset($_GET["verify_account"])){
-		$auth->sendEmailVerification($_GET["verify_account"]);
-		echo"<div id='myAlert' class='alert alert-success'>
-	        <a href='#' class='close' data-dismiss='alert'>&times;</a>
-	        <strong>Email Verification Sent!</strong><br>
-	    </div>";
-	}
-
-	?>
+	
 
 	<?php
 
 	// $data_table="student";
 	// $results_per_page=20;
 	include_once './includes/dbhandler.php';
+	include_once './includes/dbhandlerpdo.php';
 	// $newURL="ApplicationList.php";
 	// if(isset($_POST["searchstudent"])&&$_POST["searchstudent"]==""){
 	//   header('Location: '.$newURL);
@@ -164,11 +166,14 @@ table td{
 
 	<!-- Page Content -->
 		<div id="content">
+			 <center><h1 style="font-family: 'Century Gothic';">APPLICATION FOR MOBILE APP</h1></center>
+      <hr class="style15">
+
  		<form class="form-inline" action="<?php echo $_SERVER["PHP_SELF"];?>" method="POST">
       	<div class="form-group">
-        <input id="myInput" type="text" name="searchstudent" class="form-control" onkeyup="myFunction()" placeholder="Search Item"
+        <input id="myInput" type="text" name="searchstudent" class="form-control" onkeyup="myFunction()" placeholder="Search Applicant"
         size=80>
-        <button type="submit" class="btn btn-primary btn-md">Search</button>
+        <button  ="search" type="submit" class="btn btn-primary btn-md">Search</button>
         <br><br>
     	</div>
 		</form>
@@ -184,6 +189,7 @@ table td{
 		  <th bgcolor="#CCCCCC"><strong>CONTACT NO.</strong></th>
 		  <th bgcolor="#CCCCCC"><strong>USER TYPE</strong></th>
 		  <th bgcolor="#CCCCCC"><strong>ACTION</strong></th>
+
 		</tr>
 		<?php
 		require __DIR__.'/vendor/autoload.php';
@@ -206,7 +212,40 @@ table td{
 		//  while($row = $rs_result->fetch_assoc()) {
 
 		$auth = $firebase->getAuth();
+		if (isset($_GET["verify_account"]) && isset($_GET["stud_no"])){
+		$auth->sendEmailVerification($_GET["verify_account"]);
 
+		$sql = 'SELECT * FROM student WHERE StudentNumber = "'.$_GET["stud_no"].'"';
+		$stmt_select = $dbconnpdo->prepare('SELECT * FROM student WHERE StudentNumber = :userNo');
+		$stmt_select->execute(array(':userNo'=>$_GET['stud_no']));
+		$imgRow=$stmt_select->fetch(PDO::FETCH_ASSOC);
+		$update_sql = "UPDATE student SET UserId = '".$_GET["verify_account"]."' WHERE StudentNumber = '".$_GET["stud_no"]."'";
+		$count = $dbconnpdo -> exec($update_sql);
+		
+
+		$database = $firebase->getDatabase();
+		$database->getReference('User/'.$_GET["verify_account"])
+ 		  ->set([
+       'contactNumber' => $imgRow['ContactNumber'],
+       'userName' => $imgRow['Name'],
+       'userNumber' => $imgRow['StudentNumber'],
+       'userProgram' => $imgRow['Course'],
+       'userCollege' => $imgRow['College'],
+       'userPic' => $imgRow['UserPic'],
+       'yearLevel' => $imgRow['YearLevel'],
+       'userType' => $imgRow['UserType'],
+       'email' => $imgRow['Email']
+      ]);
+
+ 		
+
+
+
+		echo"<div id='myAlert' class='alert alert-success'>
+	        <a href='#' class='close' data-dismiss='alert'>&times;</a>
+	        <strong>Email Verification Sent!</strong><br>
+	    </div>";
+		}	
 		// $user = $auth->getUser('ENVelLDYDTdpspHpneO1HH09rzk2');
 		// $userInfo = $auth->getUserInfo('ENVelLDYDTdpspHpneO1HH09rzk2');
 	 	// echo "<script>console.log( 'Debug Objects: " . $user->email. "' );</script>";	
@@ -230,7 +269,7 @@ table td{
 		 // echo "<script>console.log('".$sql."')</script>
 		 // <br>";
 		$rs_result=$dbconn->query($sql);
-		if (!$rs_result || $rs_result->num_rows<=0) {
+		if (!$rs_result || $rs_result->num_rows<0) {
 		    // echo "<script>console.log(".$user->email.")</script>";
 		    // trigger_error('Invalid query: ' . $dbconn->error);
 		    echo '</table><br><br><p>No Applicants Yet!</p>';
@@ -243,18 +282,18 @@ table td{
 			
 		 while($row = $rs_result->fetch_assoc()) {
 		
-		echo "<script>console.log('".$row['userPic']."');</script>";
+		
 		echo "<tr id='myTr'>
 		<td>".$row["StudentNumber"] ."</td>
 		<td>".$row["Name"] ."</td>
-		<td><img src='images/users/".$row['userPic']."' width='100px' style='padding:8px;'></td>
+		<td><img src='images/users/".$row['UserPic']."' width='100px' style='padding:8px;'></td>
        	<td>".$row["College"]."</td>
         <td>".$row["Course"]."</td>
       	<td>".$row["YearLevel"]."</td>
        	<td>".$user->email."</td>
       	<td>". $row["ContactNumber"]."</td>
       	<td>". $row["UserType"]."</td>
-      	<td><a class='btn btn-info' href='verify_account=".$user->uid."' title='Verify Account' > Verify</a></td>
+      	<td><a class='btn btn-info' href='ApplicationList.php?verify_account=".$user->uid."&stud_no=".$row["StudentNumber"]."' title='Verify Account' > Verify</a></td>
         </tr>";
 
 		}
@@ -270,8 +309,33 @@ table td{
 
 		</div>
 
+<script>
+ 
+//   function writeUserData(userId,contactNumber, userName, userNumber, userProgram,userType) {
+//   	var bookImageRef = firebase.storage().ref('User');
+//   	// var preview = document.querySelector('.preview');
 
-<!-- Latest compiled and minified JavaScript --><!-- 
+//   	firebase.database().ref('User').child(userId).set({
+//   		contactNumber: contactNumber,
+//   		userName: userName,
+//   		userNumber: userNumber,
+//   		userProgram: userProgram,
+//   		userType: userType
+//   	}, function(error) {
+//   		if (error) {
+//   			alert("Error");
+//   		} else {
+//       // Data saved successfully!
+//       // alert('The book is created successfully!');
+//       // window.location.reload();
+//   }
+// }); 
+
+    // window.location.reload();
+
+
+// }
+
 <script src="bootstrap/js/bootstrap.min.js"></script> -->
 
 </body>

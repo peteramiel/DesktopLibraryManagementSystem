@@ -3,9 +3,9 @@
 //if ($_SESSION['fullName']==NULL){
 //echo "<script> window.location.href='AdminLogin.php';</script>";
 //}
-
+include_once './includes/dbhandler.php';
 session_start();
-if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
+if(isset($_SESSION["username"]) && $_SESSION["role"]=="admin"){
   }else{
     header('location: AdminLogin.php');
   }
@@ -13,22 +13,34 @@ if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
 ?>
 
 <?php
-if (isset($_GET["edit_id"]) &&  !empty($_GET["edit_id"])) {
-	$sql = "SELECT * FROM books WHERE callNumber = ". stripslashes($_GET['edit_id']);
-	$rs_result=mysqli_query($dbconn, $sql);
-	if (!$rs_result || $rs_result->num_rows<=0) {
-
-	}else{
-		 while($row = $rs_result->fetch_assoc()) {
-
-		 }
-		id = $_GET['edit_id'];
-		$stmt_edit = $dbconn->prepare('SELECT item_code, item_desc, item_uom, item_price, item_rqmain, item_status, avail_date, item_remarks, userPic,category FROM items WHERE item_no =:item_no');
-		$stmt_edit->execute(array(':item_no'=>$id));
-		$edit_row = $stmt_edit->fetch(PDO::FETCH_ASSOC);
-		extract($edit_row);
+	require_once "./includes/dbhandlerpdo.php";
+	if(isset($_GET['edit_id'])){
+		 $stmt_select = $dbconnpdo->prepare('SELECT * from books WHERE callNumber =:stud_no');
+    $stmt_select->execute(array(':stud_no'=>$_GET['edit_id']));
+    $row=$stmt_select->fetch(PDO::FETCH_ASSOC);
+   
+    $availableStart = $row['available'];
+    $bookAuthorStart = $row['bookAuthor'];
+    $bookTitleStart = $row['bookTitle'];
+    $callNumberStart = $row['callNumber'];
+    $locationStart = $row['location'];
+    $publishDateStart = $row['publishDate'];
+    $seriesStart = $row['series'];
+    $uniqueIdStart = $row['uniqueId'];
+    $shelfPositionStart = $row['shelfPosition'];
+   	$shelfLayerStart = $row['shelfLayer'];
+    date_default_timezone_set("Asia/Hong_Kong");
+	$dateTime = date('l g:i A F j, Y');
+	$add_activity_sql = "INSERT INTO recent_activity (userName,item_code,role,action,dateTime,item_detail) VALUES ('".$_SESSION["username"]."','$callNumberStart','admin','Edit Book','$dateTime','$bookTitleStart by $bookAuthorStart')";
+	if(!$dbconnpdo->query($add_activity_sql)){
+		 echo"<div id='myAlert' class='alert alert-alert'>
+          <a href='#' class='close' data-dismiss='alert'>&times;</a>
+          <strong>Cant Edit User Please Try </strong><br>
+      </div>";
 	}
-}
+	}else{
+		header('location: AdminSearchBook.php');
+	}
 
 ?>
 
@@ -54,7 +66,7 @@ if (isset($_GET["edit_id"]) &&  !empty($_GET["edit_id"])) {
 
 <body>
 	<?php include('AdminSidebar.php'); 
-	include_once './includes/dbhandler.php';?>
+	?>
 
 	<script type="text/javascript">
 		 document.getElementById("homeLi").classList.remove('active');
@@ -74,11 +86,22 @@ if (isset($_GET["edit_id"]) &&  !empty($_GET["edit_id"])) {
 
 	//This code runs if the form has been submitted
 	if (isset($_POST['btnsave'])) { 
+	$availableNew = $_POST['available'];
+	$bookAuthorNew = $_POST['bookAuthor'];
+	$bookTitleNew = $_POST['bookTitle'];
+	$callNumberNew = $_POST['callNumber'];
+	$locationNew = $_POST['location'];
+	$publishDateNew = $_POST['publishDate'];
+	$seriesNew = $_POST['series'];
+	$oldId = $_POST['oldId'];
+	// $shelfPositionNew = $_POST['shelfPosition']
 
 	$imgFile = $_FILES['user_image']['name'];
 	$tmp_dir = $_FILES['user_image']['tmp_name'];
 	$imgSize = $_FILES['user_image']['size'];
-	  
+	if($imgFile){
+
+		  
 	  // 	UPLOAD IMAGE TO LOCAL HOST
 			$upload_dir = 'images/books/'; // upload directory
 	
@@ -105,10 +128,11 @@ if (isset($_GET["edit_id"]) &&  !empty($_GET["edit_id"])) {
 				$errMSG = "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";		
 			}
 		// END OF UPLOAD IMAGE TO LOCAL HOST
-
+	}else{
+		$userpic = $_POST['oldPic'];
+	}
 	//UPLOAD TO DATABASE
-	$insert = "INSERT INTO books (available, bookAuthor, bookTitle, callNumber, location, publishDate, series,uniqueId)
-	VALUES ('".$_REQUEST['available']."', '".$_REQUEST['book_author']."', '".$_REQUEST['book_title']."', '".$_REQUEST['call_number']."','".$_REQUEST['location']."','".$_REQUEST['publish_date']."','".$_REQUEST['series']."','".$userpic."')";
+	$insert = "UPDATE books SET available = '$availableNew', bookAuthor='$bookAuthorNew', bookTitle='$bookTitleNew', callNumber = '$callNumberNew', location='$locationNew', publishDate = '$publishDateNew', series = '$seriesNew', uniqueId='$userpic' WHERE callNumber = '$oldId'";
 
 	$add_book = $dbconn->query($insert);
 
@@ -129,38 +153,41 @@ if (isset($_GET["edit_id"]) &&  !empty($_GET["edit_id"])) {
 
 					<tr>
 						<td><label class="control-label">Book Title</label></td>
-						<td><input class="form-control" type="text" name="book_title" id = "book_title" placeholder="Enter Book Title" required /></td>
+						<td><input class="form-control" value="<?php echo $bookTitleStart ?>" type="text" name="bookTitle" id = "bookTitle" placeholder="Enter Book Title" required /></td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Book Author</label></td>
-						<td><input class="form-control" type="text" name="book_author" id = "book_author" placeholder="Enter Book Author" required /></td>
+						<td><input class="form-control" value="<?php echo $bookAuthorStart ?>" type="text" name="bookAuthor" id = "bookAuthor" placeholder="Enter Book Author" required /></td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Call Number</label></td>
-						<td><input class="form-control" type="text" name="call_number" id = "call_number" placeholder="Enter Call Number" required /></td>
+						<td><input class="form-control" value="<?php echo $callNumberStart ?>" type="text" name="callNumber" id = "callNumber" placeholder="Enter Call Number" required /></td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Publish Date</label></td>
-						<td><input class="form-control" type="text" name="publish_date" id = "publish_date" placeholder="Enter Date of Publish" required /></td>
+						<td><input class="form-control" value="<?php echo $publishDateStart ?>" type="text" name="publishDate" id = "publishDate" placeholder="Enter Date of Publish" required /></td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Series</label></td>
-						<td><input class="form-control" type="text" name="series" id = "series" placeholder="Enter Book Series" required />
+						<td><input class="form-control" value="<?php echo $seriesStart ?>" type="text" name="series" id = "series" placeholder="Enter Book Series" required />
 						</td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Location</label></td>
-						<td><input class="form-control" type="text" name="location" id = "location" placeholder="Enter Location" required />
+						<td><input class="form-control" value="<?php echo $locationStart ?>" type="text" name="location" id = "location" placeholder="Enter Location" required />
 						</td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Available</label></td>
-						<td><input class="form-control" type="number" name="available" id = "available" placeholder="Enter Available" required /></td>
+						<td><input class="form-control" value="<?php echo $availableStart ?>" type="number" name="available" id = "available" placeholder="Enter Available" required /></td>
 					</tr>
 					<tr>
 						<td><label class="control-label">Item Picture</label></td>
-						<td><input class="input-group-hello" type="file" name="user_image" id = "unique_id" accept="image/*"required /></td>
+						<td><input class="input-group-hello" type="file" name="user_image" id = "unique_id" accept="image/*" /></td>
 					</tr>
+					<input type="hidden" name="oldPic" value="<?php echo $uniqueIdStart?>">
+					<input type="hidden" name="oldId" value="<?php echo $callNumberStart?>">
+
 
 					<tr>
 

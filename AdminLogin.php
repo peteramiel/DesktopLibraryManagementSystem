@@ -6,13 +6,13 @@ session_start();
 
 
 <head>
-	<title>Librarian - Login</title>
+	<title>Admin - Login</title>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
   	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   	<link rel="stylesheet" href="./css/login.css">
-		<link rel="icon" type="image/png" href="images/icons/PLM_Seal.png" />
+		<link rel="icon" type="image/png" href="images/icons/logo_circle.png" />
 	
 </head>
 <body>
@@ -43,10 +43,7 @@ if(isset($_POST['login-admin']))
 
  $row=mysqli_fetch_array($res);
  
- echo"<div id='myAlert' class='alert alert-danger'>
-        <a href='#' class='close' data-dismiss='alert'>&times;</a>
-        <strong>HELLO! ".$row['password']." </strong><br>
-    </div>";
+
 
 // checks it against the database
 
@@ -73,6 +70,7 @@ if ($check2 == 0) {
 else if($row['password']==($fetched_slash))
  {
   $_SESSION['username'] = $row['username'];
+  $_SESSION['role'] = "admin";
   header("Location: AdminHome.php");
  }
  else
@@ -107,7 +105,7 @@ else if($row['password']==($fetched_slash))
 					<input type="password" placeholder="Enter Password" name="password" required>
 				</div>
 				<div class="container3">
-					<button class="btn btn-outline-primary my-2 my-sm-0" name="login-admin" type="submit">Login</button>
+					<button class="btn btn-outline-primary my-2 my-sm-0" name="login-admin" type="submit" style="font-family: 'Century Gothic'">Login</button>
 				</div>
 			</form>
 

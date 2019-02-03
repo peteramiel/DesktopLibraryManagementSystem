@@ -14,27 +14,32 @@ session_start();
 }
 
 #pagination a {
-   
+    color: #888;
     float: left;
     padding: 8px 16px;
     text-decoration: none;
 }
 
+#pagination .active {
+    color: #fff;
+    
+}
+
 .active{
-    background-color: #4CAF50;
-    color: white;
+    background-color: #459ea8;
+    text-decoration: blink;
+    color: #ddd;
     border-radius: 5px;
+    font-family: 'Century Gothic';
 }
 
 #pagination a:hover:not(.active) {
     background-color: #ddd;
     border-radius: 5px;
 }
-.container{
-  height: 100%;
-}
+
 .container4{
-  height: 100%;
+  height: 50%;
    display : table;
 }
 </style>
@@ -65,7 +70,7 @@ class Crud
 
  public function get_data_in_table($query)
  {
-  $output = '<section class="cards">';
+  $output = '<section class="cards" style="margin: 0 auto;">';
   $result = $this->execute_query($query);
 
   if(mysqli_num_rows($result) > 0)
@@ -80,20 +85,20 @@ class Crud
       <div class="col-xs-3">
         <div class = "container4">
         <br>
-        <p class = "capitalize"><b>'.$row->bookTitle.'</b></p>
-        <p class="capitalize"><b>by </b>'.$row->bookAuthor.'</p>
+        <p style="color: #000; class = "capitalize"><b>'.$row->bookTitle.'</b></p>
+        <p style="color: #000;" class="capitalize"><b>by </b>'.$row->bookAuthor.'</p>
         <div class="imagetext">
         <img src="images/books/'.$row->uniqueId.'" class="img-rounded" width="75px" height="75px" />
         <p class="page-header">
         <span>';
         //FOR ADMIN EDIT AND DELETE
-        if(isset($_SESSION['fullName']) && array_key_exists('fullName',$_SESSION) && !empty($_SESSION['fullName'])){
-             $output.= ' <a class="btn btn-info" href="EditItem_Admin.php?edit_id= '.$row->bookTitle.'" title="click for edit" > Edit</a>';  }
-        // FOR USER EDIT 
-        else if(isset($_SESSION['username']) && array_key_exists('username',$_SESSION) && !empty($_SESSION['username'])){
-              $output.=' <a class="btn btn-info" href="editbook.php?edit_id= '.$row->callNumber.'" title="Click to Edit" > Edit</a>';
-        }
-        $output .='<a class="btn btn-danger" href="?delete_id='.$row->callNumber.'" title="Click for Delete" onclick="return confirm("Do you really want to delete the item:'.$row->callNumber.'?")"> Delete</a> 
+        if($_SESSION['role']=="admin" ){
+            
+              $output.=' <a class="btn btn-info" href="AdminEditBook.php?edit_id='.$row->callNumber.'" title="Click to Edit" > Edit</a>';
+        
+        $output .='<a class="btn btn-danger" href="?delete_id='.$row->callNumber.'" title="Click for Delete" onclick="return confirm("Do you really want to delete the item:'.$row->callNumber.'?")"> Delete</a>';
+      }
+        $output .=' 
           </span>
         </div>
         </div>
@@ -111,11 +116,9 @@ class Crud
   else
   {
    $output .= '
-  
-   <br><br>
-    <tr>
-     <td colspan="5" align="center">No Data Found</td>
-    </tr>
+   <br><br><br><br>
+     <p style="text-align:center; width:100%; ">No Book Found!</p>
+   
    ';
   }
   $output .= '</section>';

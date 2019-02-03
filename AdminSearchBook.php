@@ -5,96 +5,27 @@
 //}
 
 session_start();
-if(isset($_SESSION["username"]) && $_SESSION["username"]=="admin"){
+if(isset($_SESSION["username"]) && $_SESSION["role"]=="admin"){
   }else{
     header('location: AdminLogin.php');
   }
-include_once './includes/dbhandler.php';
+$servername = "localhost";
+$username = "root";
+$password = "";
+
+try {
+    $dbconn = new PDO("mysql:host=$servername;dbname=rblms", $username, $password);
+    // set the PDO error mode to exception
+    $dbconn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+   
+    }
+catch(PDOException $e)
+    {
+    echo "Connection failed: " . $e->getMessage();
+    }
 
 ?>
 
-<?php
-
-	if(isset($_GET['delete_id']))
-	{
-		// select image from db to delete
-		$escapedId=mysqli_real_escape_string($dbconn,$_GET['delete_id']);
-
-		// $escapedId= mysqli_real_escape_string($dbconn,$_GET['delete_id']);
-		$sql = "SELECT * FROM books WHERE callNumber = ". stripslashes($_GET['delete_id']);
-		$rs_result=mysqli_query($dbconn, $sql);
-		if (mysqli_num_rows($rs_result)>0) {
-			while($row = $rs_result->fetch_assoc()) {
-			unlink("images/books/".$row['uniqueId']);
-			// it will delete an actual record from db
-
-		$stmt_delete = "DELETE FROM books WHERE callNumber =".$_GET['delete_id'];
-		date_default_timezone_set("Asia/Hong_Kong");
-		$dateTime = date('l g:i A F j, Y');
-		$add_activity_sql = "INSERT INTO recent_activity (userName,item_code,role,action,dateTime) VALUES ('".$_SESSION["username"]."','".$_GET['delete_id']."','admin','Delete Book','".$dateTime."');";
-
-		if ($dbconn->query($stmt_delete) === TRUE && $dbconn->query($add_activity_sql)===TRUE) {
-		    echo"<div id='myAlert' style='margin-left:250px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>".$_GET['delete_id']."</strong><br></div>";
-		    	
-
-		} else {
-		    echo "<div id='myAlert' style='margin-left:300px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>". $dbconn->error."</strong><br></div>"; ;
-		}
-			
-				
-		
-		if ($dbconn->query($add_activity_sql) === TRUE) {
-		    echo"<div id='myAlert' style='margin-left:250px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>".$_GET['delete_id']."</strong><br></div>";
-		} else {
-		    echo "<div id='myAlert' style='margin-left:300px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>". $dbconn->error."</strong><br></div>"; ;
-		}
-			
-		header("Location: AdminSearchBook.php");
-			}
-		}
-		// else{
-		// 	echo "<div id='myAlert' style='margin-left:300px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>".$_GET['delete_id']."</strong><br></div>";
-		// 	}
-		
-		// $stmt_select = $dbconn->prepare("SELECT * FROM books WHERE callNumber =". $_GET['delete_id']);
-	
-		// $stmt_select->execute();
-		
-		// echo "<div id='myAlert' style='margin-left:300px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>".$imgRow['uniqueId']."</strong><br></div>";
-		// unlink("images/books/".$imgRow['uniqueId']);
-		
-		
-		
-		// it will delete an actual record from db
-		// $stmt_delete = $dbconn->prepare('DELETE FROM books WHERE callNumber =:callNumber');
-		// $stmt_delete->bindParam(':callNumber',$_GET['delete_id']);
-			
-		// 	$stmt_select2 = $dbconn->prepare('SELECT callNumber FROM books WHERE callNumber =:callNumber');
-		// 	$stmt_select2->execute(array(':callNumber'=>$_GET['delete_id']));
-		// 	$imgRow2=$stmt_select2->fetch(PDO::FETCH_ASSOC);
-		// 	extract($imgRow2);
-		
-		// 		$username=$_SESSION["username"];
-		// 		date_default_timezone_set("Asia/Hong_Kong");
-		// 		$dateTime = date('l g:i A F j, Y');
-		// 		$successMSG = "Loading: saving new item...";
-		// 		$stmt2 = $dbconn->prepare('INSERT INTO recent_activity(userName,item_code,role,action,dateTime)
-		// 		VALUES(:username,:item_code,:role,:action,:dateTime)');
-		// 		$stmt2->execute(array(
-		// 		"username" => "$username",
-		// 		"item_code" => "$item_code",
-		// 		"role" => "user",
-		// 		"action" => "delete item",
-		// 		"dateTime" => "$dateTime"
-		// 		));
-		
-		// $stmt_delete->execute();
-			
-		// header("Location: AdminSearchBook.php");
-	}
-
-
-?>
 
 <!DOCTYPE html>
 <html>
@@ -176,7 +107,7 @@ div.col-xs-3{
 	padding-left: 15px;
 	padding-right: 15px;
 	text-align: center;
-	height: 100%;
+	
 }
 /*div.col-xs-3{
 	text-align: center;
@@ -228,6 +159,15 @@ height: 1px;
 	bottom: 2px;
 }
 
+hr.style14 { 
+  border: 0; 
+  height: 2px; 
+  background-image: -webkit-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -moz-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -ms-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0);
+  background-image: -o-linear-gradient(left, #f0f0f0, #8c8b8b, #f0f0f0); 
+}
+
 </style>
 <head>
 	<title>Admin - Search Book</title>
@@ -243,7 +183,7 @@ height: 1px;
  
   <script src="http://code.jquery.com/jquery-2.0.3.min.js" data-semver="2.0.3" data-require="jquery"></script>
 <!-- asdf -->
-	<link rel="icon" type="image/png" href="images/icons/PLM_Seal.png" />
+	<link rel="icon" type="image/png" href="images/icons/logo_circle.png" />
 	<script src="https://www.gstatic.com/firebasejs/5.7.0/firebase.js"></script>
 	<script type="text/javascript" src="scripts/dbconf.js" ></script>
 
@@ -257,14 +197,73 @@ height: 1px;
 		 document.getElementById("newsLi").classList.remove('active');
 		 document.getElementById("studentVerificationLi").classList.remove('active');
 		 document.getElementById("librariansLi").classList.remove('active');
-		 document.getElementById("addStudentLi").classList.remove('active');
+		 document.getElementById("addStudentsLi").classList.remove('active');
 		 document.getElementById("editSearchPageLi").classList.remove('active');
 	</script>
-<div id="content">
+	<div id="content">
+
+	<?php
+
+		if(isset($_GET['delete_id']) && !empty($_GET['delete_id']))
+		{
+			// select image from db to delete
+			$stmt_select = $dbconn->prepare('SELECT * FROM books WHERE callNumber =:callNumber');
+			$stmt_select->execute(array(':callNumber'=>$_GET['delete_id']));
+			$imgRow=$stmt_select->fetch(PDO::FETCH_ASSOC);
+			unlink("images/books/".$imgRow['uniqueId']);
+			// $stmt_select->close();
+
+			// $result = $dbconn->prepare('DELETE FROM books WHERE callNumber = :callNumber');
+			// $result->execute(array(':callNumber' => $_GET['delete_id']));
+
+			// $escapedId= mysqli_real_escape_string($dbconn,$_GET['delete_id']);
+			// $sql = "SELECT * FROM books WHERE callNumber = ".$_GET['delete_id'];
+			// $rs_result=mysqli_query($dbconn, $sql);
+			// if (mysqli_num_rows($rs_result)>0) {
+			// 	while($row = $rs_result->fetch_assoc()) {
+			// 	unlink("images/books/".$row['uniqueId']);
+
+
+				// it will delete an actual record from db
+
+			$stmt_delete = "DELETE FROM books WHERE callNumber ='".$_GET['delete_id']."'";
+			date_default_timezone_set("Asia/Hong_Kong");
+			$dateTime = date('l g:i A F j, Y');
+			$add_activity_sql = "INSERT INTO recent_activity (userName,item_code,role,action,dateTime,item_detail) VALUES ('".$_SESSION["username"]."','".$_GET['delete_id']."','admin','Delete Book','".$dateTime."','".$imgRow['bookTitle']." by ". $imgRow['bookAuthor'] ."');";
+
+			if ($dbconn->query($stmt_delete) === TRUE && $dbconn->query($add_activity_sql)===TRUE) {
+			    echo"<div id='myAlert' style='margin-left:250px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>".$_GET['delete_id']."</strong><br></div>";
+			    	
+
+			} else {
+				// CONNECTION ERROR
+
+			    // echo "<div id='myAlert' style='margin-left:300px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>". $dbconn->error."</strong><br></div>"; ;
+
+			}
+				
+					
+			
+			if ($dbconn->query($add_activity_sql) === TRUE) {
+			    echo"<div id='myAlert' style='margin-left:250px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>".$_GET['delete_id']."</strong><br></div>";
+			} else {
+				//CONNECTION ERROR
+			    // echo "<div id='myAlert' style='margin-left:300px;' class='alert alert-danger'><a href='#' class='close' data-dismiss='alert'>&times;</a><strong>". $dbconn->error."</strong><br></div>"; ;
+			}
+				
+			
+			
+			
+		
+		}
+
+
+	?>
 	<div class="container">
-  	<h2><span class="glyphicon glyphicon-cog"></span>    MANAGE BOOKS</h2>
-  	<p>The following list of books are made available in the system</p><br>
-	<input type="text" name="search" class="form-control" id="search" placeholder="Search Item" size="173"><br><br>
+  	<h1 style="font-family: 'Century Gothic'; text-align: center;"><span class="glyphicon glyphicon-cog"></span>    MANAGE BOOKS</h1>
+  	<hr class="style14">
+  	<p style="font-family: 'Verdana'; text-align: center;" >The following books are available in the system.</p><br>
+	<input type="text" name="search" title="Type call number, author or title" class="form-control" autocomplete="off" id="search" placeholder="Search Book" size="173"><br><br>
   	</div>
 
 
